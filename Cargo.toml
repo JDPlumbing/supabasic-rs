@@ -1,14 +1,16 @@
 [package]
-name = "supabase-rs"
+name = "supabasic-rs"
 version = "0.1.0"
 edition = "2021"
 authors = ["Dr. Ippy <jdplumbingsoflo@gmail.com>"]
 license = "MIT"
-repository = "https://github.com/JDPlumbing/supabase-rs"
+repository = "https://github.com/JDPlumbing/supabasic-rs"
 
 [dependencies]
-reqwest = { version = "0.11", features = ["json", "blocking", "tls"] }
+reqwest = { version = "0.11", features = ["json", "blocking", "rustls-tls"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tokio = { version = "1", features = ["full"] }
 
+[dev-dependencies]
+dotenvy = "0.15"

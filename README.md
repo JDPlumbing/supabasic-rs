@@ -1,13 +1,13 @@
-# supabase-rs
+# supabasic-rs
 
-[![CI](https://github.com/JDPlumbing/supabase-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/JDPlumbing/supabase-rs/actions)
+[![CI](https://github.com/JDPlumbing/supabasic-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/JDPlumbing/supabasic-rs/actions)
 
 Created by [JDPlumbing](https://github.com/JDPlumbing)
 
 ## 📦 Installation
 
 ```bash
-cargo install supabase-rs
+cargo install supabasic-rs
 ```
 
 ## 🚀 Usage
