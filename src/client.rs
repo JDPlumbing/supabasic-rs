@@ -1,3 +1,4 @@
+use serde::de::DeserializeOwned; 
 use reqwest::Client;
 use serde_json::Value;
 
@@ -114,4 +115,45 @@ impl<'a> QueryBuilder<'a> {
 
         Ok(res.json().await?)
     }
+    
+    pub async fn execute_typed<T: DeserializeOwned>(self) -> Result<Vec<T>, reqwest::Error> {
+        let url = format!("{}/rest/v1/{}{}", self.client.url, self.table, self.query);
+
+        let req = match self.method {
+            Method::Select => self.client.http.get(&url),
+            Method::Insert => self.client.http.post(&url).json(&self.payload),
+            Method::Update => self.client.http.patch(&url).json(&self.payload),
+            Method::Delete => self.client.http.delete(&url),
+        };
+
+        let res = req
+            .header("apikey", &self.client.api_key)
+            .header("Authorization", format!("Bearer {}", &self.client.api_key))
+            .header("Content-Type", "application/json")
+            .send()
+            .await?;
+
+        res.json::<Vec<T>>().await
+    }
+
+    pub async fn execute_one<T: DeserializeOwned>(self) -> Result<T, reqwest::Error> {
+        let url = format!("{}/rest/v1/{}{}", self.client.url, self.table, self.query);
+
+        let req = match self.method {
+            Method::Select => self.client.http.get(&url),
+            Method::Insert => self.client.http.post(&url).json(&self.payload),
+            Method::Update => self.client.http.patch(&url).json(&self.payload),
+            Method::Delete => self.client.http.delete(&url),
+        };
+
+        let res = req
+            .header("apikey", &self.client.api_key)
+            .header("Authorization", format!("Bearer {}", &self.client.api_key))
+            .header("Content-Type", "application/json")
+            .send()
+            .await?;
+
+        res.json::<T>().await
+    }
+
 }
