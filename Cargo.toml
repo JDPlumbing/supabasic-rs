@@ -1,10 +1,10 @@
 [package]
-name = "supabasic-rs"
+name = "supabasic"
 version = "0.1.0"
 edition = "2021"
 authors = ["Dr. Ippy <jdplumbingsoflo@gmail.com>"]
 license = "MIT"
-repository = "https://github.com/JDPlumbing/supabasic-rs"
+repository = "https://github.com/JDPlumbing/supabasic"
 description = "Basic Supabase Api Crate"
 
 [dependencies]
