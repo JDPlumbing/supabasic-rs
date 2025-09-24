@@ -1,4 +1,4 @@
-use supabasic_rs::Supabase;
+use supabasic::Supabase;
 use dotenvy::dotenv;
 use std::env;
 use serde_json::json;
