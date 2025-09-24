@@ -110,6 +110,8 @@ impl<'a> QueryBuilder<'a> {
             .header("apikey", &self.client.api_key)
             .header("Authorization", format!("Bearer {}", &self.client.api_key))
             .header("Content-Type", "application/json")
+            .header("Prefer", "return=representation")
+
             .send()
             .await?;
 
@@ -130,6 +132,8 @@ impl<'a> QueryBuilder<'a> {
             .header("apikey", &self.client.api_key)
             .header("Authorization", format!("Bearer {}", &self.client.api_key))
             .header("Content-Type", "application/json")
+            .header("Prefer", "return=representation")
+
             .send()
             .await?;
 
@@ -150,6 +154,8 @@ impl<'a> QueryBuilder<'a> {
             .header("apikey", &self.client.api_key)
             .header("Authorization", format!("Bearer {}", &self.client.api_key))
             .header("Content-Type", "application/json")
+            .header("Prefer", "return=representation")
+
             .send()
             .await?;
 
