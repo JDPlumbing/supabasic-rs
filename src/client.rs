@@ -1,7 +1,7 @@
-use serde::de::DeserializeOwned; 
+use serde::de::DeserializeOwned;
 use reqwest::Client;
 use serde_json::Value;
-use crate::error::{SupabasicError, Result};
+use crate::error::{Result};
 
 pub struct Supabase {
     url: String,
@@ -19,7 +19,6 @@ impl Supabase {
     }
 
     pub fn from(&self, table: &str) -> QueryBuilder<'_> {
-
         QueryBuilder {
             client: self,
             table: table.to_string(),
@@ -97,25 +96,25 @@ impl<'a> QueryBuilder<'a> {
         }
     }
 
-        pub async fn execute(self) -> Result<Value> {
-            let url = format!("{}/rest/v1/{}{}", self.client.url, self.table, self.query);
+    pub async fn execute(self) -> Result<Value> {
+        let url = format!("{}/rest/v1/{}{}", self.client.url, self.table, self.query);
 
-            let req = match self.method {
-                Method::Select => self.client.http.get(&url),
-                Method::Insert => self.client.http.post(&url).json(&self.payload),
-                Method::Update => self.client.http.patch(&url).json(&self.payload),
-                Method::Delete => self.client.http.delete(&url),
-            };
+        let req = match self.method {
+            Method::Select => self.client.http.get(&url),
+            Method::Insert => self.client.http.post(&url).json(&self.payload),
+            Method::Update => self.client.http.patch(&url).json(&self.payload),
+            Method::Delete => self.client.http.delete(&url),
+        };
 
-            let res = req
-                .header("apikey", &self.client.api_key)
-                .header("Authorization", format!("Bearer {}", &self.client.api_key))
-                .header("Content-Type", "application/json")
-                .send()
-                .await?;
+        let res = req
+            .header("apikey", &self.client.api_key)
+            .header("Authorization", format!("Bearer {}", &self.client.api_key))
+            .header("Content-Type", "application/json")
+            .send()
+            .await?;
 
-            Ok(res.json().await?)
-        }
+        Ok(res.json().await?)
+    }
 
     pub async fn execute_typed<T: DeserializeOwned>(self) -> Result<Vec<T>> {
         let url = format!("{}/rest/v1/{}{}", self.client.url, self.table, self.query);
@@ -134,8 +133,7 @@ impl<'a> QueryBuilder<'a> {
             .send()
             .await?;
 
-        let parsed = res.json::<Vec<T>>().await?;
-        Ok(parsed)
+        Ok(res.json::<Vec<T>>().await?)
     }
 
     pub async fn execute_one<T: DeserializeOwned>(self) -> Result<T> {
@@ -155,9 +153,6 @@ impl<'a> QueryBuilder<'a> {
             .send()
             .await?;
 
-        let parsed = res.json::<T>().await?;
-        Ok(parsed)
+        Ok(res.json::<T>().await?)
     }
-
-
 }
