@@ -161,4 +161,32 @@ impl<'a> QueryBuilder<'a> {
 
         Ok(res.json::<T>().await?)
     }
+
+    pub fn is_null(mut self, column: &str) -> Self {
+        let filter = format!("{}=is.null", column);
+        self.add_filter(filter);
+        self
+    }
+
+    pub fn not_null(mut self, column: &str) -> Self {
+        let filter = format!("{}=not.is.null", column);
+        self.add_filter(filter);
+        self
+    }
+
+    pub fn is_(mut self, column: &str, op: &str) -> Self {
+        // op should be "null" or "not.null"
+        let filter = format!("{}=is.{}", column, op);
+        self.add_filter(filter);
+        self
+    }
+
+    // convenience for null checks
+
+    pub fn is_not_null(mut self, column: &str) -> Self {
+        let filter = format!("{}=is.not.null", column);
+        self.add_filter(filter);
+        self
+    }
+
 }
